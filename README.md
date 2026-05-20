@@ -169,7 +169,13 @@ enterprise-knowledge-base-system/
 
 ## Screenshots
 
-*Screenshots will be added after deployment.*
+- Login Page
+  <img width="1919" height="881" alt="image" src="https://github.com/user-attachments/assets/5a9d0a85-88bd-4f3f-b807-2370fcd040e5" />
+- Dashboard Page
+  <img width="1919" height="897" alt="image" src="https://github.com/user-attachments/assets/39b1f205-7a03-4616-bafd-def33b15a6f6" />
+  
+
+
 
 | Page            | Description                              |
 |-----------------|------------------------------------------|
