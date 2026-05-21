@@ -258,9 +258,28 @@ enterprise-knowledge-base-system/
 | /analytics | All roles | Enhanced 5-tab analytics dashboard |
 
 ### Chart Components (Pure SVG - No Libraries)
-- LineChart.jsx - Daily views and trend lines
-- BarChart.jsx - Keyword frequency and volume
-- HorizontalBar.jsx - Status distribution and category breakdowns
+- **LineChart.jsx** — Daily views and trend lines with hover tooltips
+- **BarChart.jsx** — Keyword frequency and volume with value labels
+- **HorizontalBar.jsx** — Status distribution and category breakdowns with animated fill
+
+### Analytics Dashboard — 5 Tabs
+| Tab | Data Source | Key Features |
+|-----|-------------|--------------|
+| Overview | /api/analytics/dashboard | 6 metric cards, top 10 articles table, status + category breakdowns |
+| Trends | /api/analytics/trends | Growth badges, daily views LineChart, category trends table |
+| Search Analytics | /api/analytics/keywords | Top keywords BarChart, content gap detection (zero results), volume by day |
+| Authors | /api/analytics/authors | Sortable leaderboard, top-3 mini cards, most-viewed article per author |
+| Export | /api/analytics/export | One-click CSV download for articles, keywords, authors, category trends |
+
+### ETL Import Page Features
+- Drag-and-drop or file-picker for CSV / JSON upload
+- Indeterminate progress bar while importing
+- Results summary: Total / Success / Failed stat boxes
+- Collapsible error list (first 20 errors shown)
+- Full job history table with status badges and duration
+- Click any job row to open a detail modal with full error log
+- Generate 120 sample articles with one button
+- Download generated sample as CSV or JSON
 
 ---
 
