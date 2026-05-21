@@ -169,9 +169,22 @@ enterprise-knowledge-base-system/
 
 ## Screenshots
 
-Login page - 
+- Login Page
+  <img width="1919" height="881" alt="image" src="https://github.com/user-attachments/assets/5a9d0a85-88bd-4f3f-b807-2370fcd040e5" />
+- Dashboard Page
+  <img width="1919" height="897" alt="image" src="https://github.com/user-attachments/assets/39b1f205-7a03-4616-bafd-def33b15a6f6" />
+- Articles
+<img width="1919" height="889" alt="image" src="https://github.com/user-attachments/assets/90d1943f-e0f4-4a37-9f06-cee47e615ed9" />
+- article view
+<img width="1919" height="949" alt="image" src="https://github.com/user-attachments/assets/f9f4d10b-ddc1-4da3-b858-741ca84e51e5" />
+- analytics 
+<img width="1919" height="873" alt="image" src="https://github.com/user-attachments/assets/20e3800b-5710-4b06-9309-b45abd818a16" />
+- approval queue
+<img width="1919" height="896" alt="image" src="https://github.com/user-attachments/assets/daa108bf-27dd-4121-99fe-d267f2945b09" />
 
 
+
+  
 | Page            | Description                              |
 |-----------------|------------------------------------------|
 | Login           | Authentication page with demo credentials |
