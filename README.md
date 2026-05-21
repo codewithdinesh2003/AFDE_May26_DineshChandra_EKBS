@@ -182,6 +182,13 @@ enterprise-knowledge-base-system/
 - approval queue
 <img width="1919" height="896" alt="image" src="https://github.com/user-attachments/assets/daa108bf-27dd-4121-99fe-d267f2945b09" />
 
+- ETL
+  <img width="1919" height="894" alt="image" src="https://github.com/user-attachments/assets/33b63b22-b5d7-4f36-b7ea-5890aa0cce94" />
+
+<img width="1919" height="888" alt="image" src="https://github.com/user-attachments/assets/4cd357b4-9041-4cea-9c99-536c51d0b65f" />
+
+
+
 
 
   
