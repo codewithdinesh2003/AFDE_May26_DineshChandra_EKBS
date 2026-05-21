@@ -17,6 +17,7 @@ import Bookmarks from './pages/Bookmarks'
 import MyArticles from './pages/MyArticles'
 import ApprovalQueue from './pages/ApprovalQueue'
 import Analytics from './pages/Analytics'
+import ETLImport from './pages/ETLImport'
 
 function Layout({ children }) {
   return (
@@ -96,6 +97,13 @@ export default function App() {
             <ProtectedRoute>
               <RoleRoute roles={['admin', 'reviewer']}>
                 <Layout><Analytics /></Layout>
+              </RoleRoute>
+            </ProtectedRoute>
+          } />
+          <Route path="/etl-import" element={
+            <ProtectedRoute>
+              <RoleRoute roles={['admin']}>
+                <Layout><ETLImport /></Layout>
               </RoleRoute>
             </ProtectedRoute>
           } />

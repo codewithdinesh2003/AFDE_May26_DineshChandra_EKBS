@@ -30,6 +30,7 @@ export default function Navbar() {
                 <NavLink to="/categories" className={({ isActive }) => `navbar-link${isActive ? ' active' : ''}`}>Categories</NavLink>
                 <NavLink to="/users" className={({ isActive }) => `navbar-link${isActive ? ' active' : ''}`}>Users</NavLink>
                 <NavLink to="/analytics" className={({ isActive }) => `navbar-link${isActive ? ' active' : ''}`}>Analytics</NavLink>
+                <NavLink to="/etl-import" className={({ isActive }) => `navbar-link${isActive ? ' active' : ''}`}>📥 ETL Import</NavLink>
               </>
             )}
           </>
