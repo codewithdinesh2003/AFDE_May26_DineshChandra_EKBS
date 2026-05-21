@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from sqlalchemy import func
+from sqlalchemy import func, text
 from typing import Optional
 from database import get_db
 import models, schemas
@@ -199,6 +199,16 @@ def get_article(
         article.view_count += 1
         db.commit()
         db.refresh(article)
+
+        try:
+            db.execute(text("""
+                INSERT INTO article_analytics (article_id, view_date, view_count)
+                VALUES (:article_id, CURDATE(), 1)
+                ON DUPLICATE KEY UPDATE view_count = view_count + 1
+            """), {"article_id": article_id})
+            db.commit()
+        except Exception:
+            pass
 
         return {
             "success": True,

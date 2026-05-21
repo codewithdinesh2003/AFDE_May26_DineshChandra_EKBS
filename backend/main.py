@@ -34,6 +34,7 @@ app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 # Import and register routers
 from routers import auth, articles, categories, tags, search, comments, ratings, bookmarks, attachments, users, analytics
+from routers import etl as etl_router
 
 app.include_router(auth.router, prefix="/api/auth", tags=["Auth"])
 app.include_router(articles.router, prefix="/api/articles", tags=["Articles"])
@@ -46,6 +47,7 @@ app.include_router(bookmarks.router, prefix="/api/bookmarks", tags=["Bookmarks"]
 app.include_router(attachments.router, prefix="/api", tags=["Attachments"])
 app.include_router(users.router, prefix="/api/users", tags=["Users"])
 app.include_router(analytics.router, prefix="/api/analytics", tags=["Analytics"])
+app.include_router(etl_router.router, prefix="/api/etl", tags=["ETL"])
 
 
 @app.get("/")

@@ -122,3 +122,64 @@ CREATE TABLE approval_workflow (
     FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE,
     FOREIGN KEY (reviewer_id) REFERENCES users(id) ON DELETE SET NULL
 ) ENGINE=InnoDB;
+
+-- ─── Phase 2 Tables ────────────────────────────────────────────────────────────
+
+-- Article daily view analytics
+CREATE TABLE article_analytics (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    article_id INT NOT NULL,
+    view_date DATE NOT NULL,
+    view_count INT DEFAULT 1,
+    FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE,
+    UNIQUE KEY unique_daily_view (article_id, view_date)
+) ENGINE=InnoDB;
+
+-- Search keyword logs
+CREATE TABLE search_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    keyword VARCHAR(255) NOT NULL,
+    user_id INT NULL,
+    results_count INT DEFAULT 0,
+    searched_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+-- Weekly category trend snapshots
+CREATE TABLE category_trends (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    category_id INT NOT NULL,
+    week_start DATE NOT NULL,
+    article_count INT DEFAULT 0,
+    total_views INT DEFAULT 0,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE,
+    UNIQUE KEY unique_weekly_trend (category_id, week_start)
+) ENGINE=InnoDB;
+
+-- Author aggregated statistics
+CREATE TABLE author_stats (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    author_id INT UNIQUE NOT NULL,
+    total_articles INT DEFAULT 0,
+    approved_articles INT DEFAULT 0,
+    pending_articles INT DEFAULT 0,
+    rejected_articles INT DEFAULT 0,
+    total_views INT DEFAULT 0,
+    avg_rating DECIMAL(3,2) DEFAULT 0.00,
+    last_updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- ETL job execution history
+CREATE TABLE etl_job_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    job_name VARCHAR(100) NOT NULL,
+    source_file VARCHAR(255),
+    status ENUM('running','completed','failed') DEFAULT 'running',
+    total_records INT DEFAULT 0,
+    success_count INT DEFAULT 0,
+    failed_count INT DEFAULT 0,
+    error_log TEXT NULL,
+    started_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    completed_at DATETIME NULL
+) ENGINE=InnoDB;

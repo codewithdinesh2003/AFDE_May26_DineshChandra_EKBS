@@ -169,7 +169,8 @@ enterprise-knowledge-base-system/
 
 ## Screenshots
 
-*Screenshots will be added after deployment.*
+Login page - 
+
 
 | Page            | Description                              |
 |-----------------|------------------------------------------|
@@ -178,6 +179,77 @@ enterprise-knowledge-base-system/
 | Article View    | Full article with ratings and comments   |
 | Approval Queue  | Reviewer workflow for pending articles   |
 | Analytics       | Dashboard with charts and statistics     |
+
+
+## Phase 2 - ETL Pipeline & Analytics
+
+### New Features
+- Bulk import articles from CSV or JSON (up to 120+ articles at once)
+- ETL pipeline with extract, transform, and load stages
+- Auto-creates categories and tags that don't exist
+- Duplicate detection during import
+- Per-record error handling (one failure won't stop the import)
+- Search keyword tracking and analytics
+- Daily article view tracking
+- Author activity statistics
+- Category trend reports
+- CSV export for all reports
+
+### Phase 2 Tech Additions
+| Component | Technology |
+|-----------|------------|
+| ETL Pipeline | Python (custom, no frameworks) |
+| Analytics Tables | MySQL (article_analytics, search_logs, author_stats, category_trends) |
+| Sample Data | 120 pre-generated articles across 6 categories |
+| Charts | Pure SVG (no chart libraries) |
+| CSV Export | Python csv + StreamingResponse |
+
+### New API Endpoints (Phase 2)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /api/etl/import | Import CSV or JSON file |
+| GET | /api/etl/jobs | List ETL job history |
+| GET | /api/etl/jobs/{id} | Get job detail + errors |
+| POST | /api/etl/generate-sample | Generate 120 sample articles |
+| GET | /api/etl/sample/download/{format} | Download sample CSV/JSON |
+| GET | /api/analytics/trends | Category and view trends |
+| GET | /api/analytics/keywords | Search keyword analysis |
+| GET | /api/analytics/authors | Author activity report |
+| GET | /api/analytics/export | Download CSV reports |
+
+### CSV Import Format
+| Column | Required | Format | Notes |
+|--------|----------|--------|-------|
+| title | Yes | text | Max 255 chars |
+| content | Yes | text | Min 50 chars |
+| summary | No | text | Auto-generated if missing |
+| category | Yes | text | Created automatically if new |
+| tags | No | comma-separated | Created automatically if new |
+| author_email | No | email | Falls back to admin if not found |
+| views | No | integer | Defaults to 0 |
+| status | No | approved/draft/pending | Defaults to draft |
+| created_at | No | YYYY-MM-DD | Defaults to today |
+
+### How to Run ETL Import
+1. Start backend: `cd backend && uvicorn main:app --reload`
+2. Login as admin (admin@ekbms.com / admin123)
+3. Navigate to /etl-import
+4. Click "Generate Sample Data" to create 120 sample articles
+5. Download the CSV, then re-upload it to test the pipeline
+6. View import results and job history
+
+### Frontend Pages (Phase 2)
+| Route | Access | Description |
+|-------|--------|-------------|
+| /etl-import | Admin only | Bulk import CSV/JSON + job history |
+| /analytics | All roles | Enhanced 5-tab analytics dashboard |
+
+### Chart Components (Pure SVG - No Libraries)
+- LineChart.jsx - Daily views and trend lines
+- BarChart.jsx - Keyword frequency and volume
+- HorizontalBar.jsx - Status distribution and category breakdowns
+
+---
 
 ## License
 

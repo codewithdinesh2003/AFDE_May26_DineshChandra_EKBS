@@ -1,6 +1,6 @@
 from sqlalchemy import (
     Column, Integer, String, Text, Boolean, DateTime, Enum, ForeignKey,
-    SmallInteger, UniqueConstraint, Index
+    SmallInteger, UniqueConstraint, Index, Date, DECIMAL
 )
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
@@ -162,3 +162,71 @@ class ApprovalWorkflow(Base):
 
     article = relationship("Article", back_populates="workflows")
     reviewer = relationship("User", back_populates="reviews")
+
+
+# ─── Phase 2 Models ────────────────────────────────────────────────────────────
+
+class ArticleAnalytics(Base):
+    __tablename__ = "article_analytics"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    article_id = Column(Integer, ForeignKey("articles.id", ondelete="CASCADE"), nullable=False)
+    view_date = Column(Date, nullable=False)
+    view_count = Column(Integer, default=1)
+
+    __table_args__ = (
+        UniqueConstraint("article_id", "view_date", name="unique_daily_view"),
+    )
+
+
+class SearchLog(Base):
+    __tablename__ = "search_logs"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    keyword = Column(String(255), nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
+    results_count = Column(Integer, default=0)
+    searched_at = Column(DateTime, default=func.now())
+
+
+class CategoryTrend(Base):
+    __tablename__ = "category_trends"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    category_id = Column(Integer, ForeignKey("categories.id", ondelete="CASCADE"), nullable=False)
+    week_start = Column(Date, nullable=False)
+    article_count = Column(Integer, default=0)
+    total_views = Column(Integer, default=0)
+
+    __table_args__ = (
+        UniqueConstraint("category_id", "week_start", name="unique_weekly_trend"),
+    )
+
+
+class AuthorStats(Base):
+    __tablename__ = "author_stats"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    author_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), unique=True, nullable=False)
+    total_articles = Column(Integer, default=0)
+    approved_articles = Column(Integer, default=0)
+    pending_articles = Column(Integer, default=0)
+    rejected_articles = Column(Integer, default=0)
+    total_views = Column(Integer, default=0)
+    avg_rating = Column(DECIMAL(3, 2), default=0.00)
+    last_updated = Column(DateTime, default=func.now(), onupdate=func.now())
+
+
+class ETLJobLog(Base):
+    __tablename__ = "etl_job_logs"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    job_name = Column(String(100), nullable=False)
+    source_file = Column(String(255))
+    status = Column(Enum("running", "completed", "failed"), default="running")
+    total_records = Column(Integer, default=0)
+    success_count = Column(Integer, default=0)
+    failed_count = Column(Integer, default=0)
+    error_log = Column(Text, nullable=True)
+    started_at = Column(DateTime, default=func.now())
+    completed_at = Column(DateTime, nullable=True)

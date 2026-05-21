@@ -4,7 +4,7 @@ from sqlalchemy import text, func
 from typing import Optional
 from database import get_db
 import models
-from auth import get_current_user
+from auth import get_current_user, get_current_user_optional
 
 router = APIRouter()
 
@@ -18,7 +18,8 @@ def search_articles(
     sort: Optional[str] = "latest",
     page: int = Query(1, ge=1),
     limit: int = Query(10, ge=1, le=100),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: Optional[models.User] = Depends(get_current_user_optional)
 ):
     try:
         query = db.query(models.Article).filter(models.Article.status == "approved")
@@ -71,6 +72,17 @@ def search_articles(
                 "tags": tags,
                 "avg_rating": float(round(avg_rating, 2)) if avg_rating else None,
             })
+
+        try:
+            log = models.SearchLog(
+                keyword=q or "",
+                user_id=current_user.id if current_user else None,
+                results_count=total,
+            )
+            db.add(log)
+            db.commit()
+        except Exception:
+            pass
 
         return {
             "success": True,
